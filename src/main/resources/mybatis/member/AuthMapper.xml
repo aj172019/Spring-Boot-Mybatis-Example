@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.mybatis.member.mapper.AuthMapper">
     <select id="selectMemberByUserNameAndPassword" resultType="com.example.mybatis.member.dto.LoginResponse">
-        select username from member where username = #{username} and password = #{password}
+        select username
+        from member
+        <where>
+            and username = #{username}
+            and password = #{password}
+        </where>
     </select>
 </mapper>

@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -32,10 +33,11 @@ class AuthServiceImplTest {
     @DisplayName("Login")
     void login() {
         // given
-        given(mockLoginRequest.getUsername()).willReturn("신은숙");
-        given(mockLoginRequest.getPassword()).willReturn("1q2w3e!!");
         given(authMapper.selectMemberByUserNameAndPassword(any(LoginRequest.class))).willReturn(mockLoginResponse);
         given(mockLoginResponse.getUsername()).willReturn("신은숙");
 
+        final LoginResponse loginResponse = authService.login(mockLoginRequest);
+
+        assertThat(loginResponse.getUsername()).isEqualTo("신은숙");
     }
 }

@@ -1,6 +1,8 @@
 package com.example.mybatis.member.controller;
 
 import com.example.mybatis.member.dto.LoginRequest;
+import com.example.mybatis.member.dto.LoginResponse;
+import com.example.mybatis.member.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +15,14 @@ import javax.validation.Valid;
 @RequestMapping("/api/auth")
 public class AuthController {
 
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<LoginRequest> login(@Valid @RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 }

@@ -15,8 +15,7 @@ import javax.validation.Valid;
 public class MemberController {
 
     @PostMapping
-    public ResponseEntity<CreateMemberResponse> create(@Valid @RequestBody SaveMemberRequest saveMemberRequest) {
-
+    public ResponseEntity<CreateMemberResponse> create(@RequestBody SaveMemberRequest saveMemberRequest) {
         return ResponseEntity.ok().build();
     }
 
