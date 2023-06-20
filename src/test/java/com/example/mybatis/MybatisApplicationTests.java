@@ -2,7 +2,6 @@ package com.example.mybatis;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -10,10 +9,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 class MybatisApplicationTests {
     @LocalServerPort
     int port;
-
     @BeforeEach
     void contextLoads() {
         RestAssured.port = port;
     }
-
 }

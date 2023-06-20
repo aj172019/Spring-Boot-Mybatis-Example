@@ -1,19 +1,7 @@
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "com.qqviaja.gradle:mybatis-generator-plugin:2.5"
-    }
-}
-
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.12'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-    id "com.qqviaja.gradle.MybatisGenerator" version "2.5"
 }
 
 group = 'com.example'
@@ -23,37 +11,9 @@ java {
     sourceCompatibility = '11'
 }
 
-apply plugin: "com.qqviaja.gradle.MybatisGenerator"
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
-    }
-    mybatisGenerator
-}
-
-mybatisGenerator {
-    verbose = true
-    configFile = 'src/main/resources/mybatis/MybatisGenerator.xml'
-
-    Properties properties = new Properties()
-    Reader reader = new FileReader(project.rootProject.file('src/main/resources/application.properties'))
-    properties.load(reader)
-
-    //noinspection GroovyAssignabilityCheck
-    mybatisProperties = [
-            'url' : properties.getProperty('spring.datasource.url'),
-            'driver-class' : properties.getProperty('spring.datasource.driver-class-name'),
-            'user' : properties.getProperty('spring.datasource.username'),
-            'password' : properties.getProperty('spring.datasource.password')
-    ]
-
-    // optional, here is the override dependencies for the plugin or you can add other database dependencies.
-    dependencies {
-        mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.4.2'
-        mybatisGenerator 'mysql:mysql-connector-java:5.1.47'
-        mybatisGenerator 'org.postgresql:postgresql:42.2.6'
-        mybatisGenerator 'org.mariadb.jdbc:mariadb-java-client'
     }
 }
 
