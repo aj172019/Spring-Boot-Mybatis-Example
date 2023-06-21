@@ -1,0 +1,17 @@
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow: hidden;
+}
+
+.a-title {
+    text-decoration: none;
+    color: #4e423b;
+}
+
+.a-title:hover {
+    color: #15751b;
+    text-decoration: underline;
+}
