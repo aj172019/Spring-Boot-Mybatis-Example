@@ -1,5 +1,6 @@
 package com.example.mybatis.restful.controller;
 
+import com.example.mybatis.restful.dto.ProductRequest;
 import com.example.mybatis.restful.dto.ProductResponse;
 import com.example.mybatis.restful.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -37,4 +38,13 @@ public class ProductController {
     public ProductResponse getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
+
+
+    // @PutMapping 어노테이션을 사용하여 "/api/products/{id}" 경로에 대한 PUT 요청을 처리
+    // ProductService updateProduct 메서드를 호출하여 주어진 ID에 해당하는 제품을 업데이트하고, 업데이트된 제품 요청을 반환
+    @PutMapping("/{id}")
+    public ProductRequest updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
+        return productService.updateProduct(id, productRequest);
+    }
+
 }

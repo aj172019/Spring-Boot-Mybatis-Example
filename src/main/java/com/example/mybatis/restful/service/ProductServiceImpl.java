@@ -1,5 +1,6 @@
 package com.example.mybatis.restful.service;
 
+import com.example.mybatis.restful.dto.ProductRequest;
 import com.example.mybatis.restful.dto.ProductResponse;
 import com.example.mybatis.restful.mapper.ProductMapper;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,16 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProductById(Long id) {
         return productMapper.getProductById(id);
     }
+
+
+    // 주어진 ID에 해당하는 Product를 수정하는 메서드
+    @Override
+    public ProductRequest updateProduct(Long id, ProductRequest productDTO) {
+        productDTO.setId(id);
+        productMapper.updateProduct(productDTO);
+        return productDTO;
+    }
+
 
 
 }

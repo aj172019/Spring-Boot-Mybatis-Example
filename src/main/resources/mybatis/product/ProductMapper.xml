@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mybatis.restful.mapper.ProductMapper">
 
-    <!-- 제품 결과를 매핑하기 위한 resultMap 정의 -->
+    <!-- 제품 결과를 매핑하기 위한 resultMap -->
+    <!-- 제품의 id, name, description, price를 매핑 -->
     <resultMap id="productResultMap" type="com.example.mybatis.restful.dto.ProductResponse">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
@@ -12,24 +13,37 @@
         <result property="price" column="price"/>
     </resultMap>
 
-    <!-- 제품 삽입을 위한 insert 쿼리 정의 -->
+    <!-- 제품 삽입을 위한 insert 쿼리 -->
+    <!-- ProductResponse를 매개변수로 받아서 products 테이블에 데이터 삽입 -->
     <insert id="insertProduct" parameterType="com.example.mybatis.restful.dto.ProductResponse">
         INSERT INTO products (name, description, price)
         VALUES (#{name}, #{description}, #{price});
     </insert>
 
-    <!-- 모든 제품을 가져오기 위한 select 쿼리 정의 -->
+    <!-- 모든 제품을 가져오기 위한 select 쿼리 -->
+    <!-- productResultMap을 사용하여 결과를 매핑 -->
     <select id="getAllProducts" resultMap="productResultMap">
-        SELECT * FROM products
+        SELECT *
+        FROM products
     </select>
 
-    <!-- 주어진 ID에 해당하는 제품을 가져오기 위한 select 쿼리 정의 -->
+    <!-- 주어진 ID에 해당하는 제품을 가져오기 위한 select 쿼리 -->
+    <!-- Long 타입의 id 매개변수를 받아서 해당 id에 대한 제품을 조회하고, productResultMap을 사용하여 결과를 매핑 -->
     <select id="getProductById" parameterType="Long" resultMap="productResultMap">
         SELECT *
         FROM products
         WHERE id = #{id}
     </select>
 
+    <!-- 제품을 업데이트하기 위한 update 쿼리 -->
+    <!-- ProductRequest를 매개변수로 받아서 해당 id의 제품을 업데이트 -->
+    <update id="updateProduct" parameterType="com.example.dto.ProductRequest">
+        UPDATE products
+        SET name        = #{name},
+            description = #{description},
+            price       = #{price}
+        WHERE id = #{id}
+    </update>
 
 
 </mapper>

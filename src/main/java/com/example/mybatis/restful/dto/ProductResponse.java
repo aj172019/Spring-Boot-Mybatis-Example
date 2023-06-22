@@ -13,3 +13,4 @@ public class ProductResponse {
     private double price;   // 상품의 가격
 
 }
+
