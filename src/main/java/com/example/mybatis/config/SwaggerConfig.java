@@ -12,6 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    // Swagger 설정을 위한 Docket 빈을 생성하는 메서드
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)

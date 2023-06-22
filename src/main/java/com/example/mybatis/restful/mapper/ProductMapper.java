@@ -22,4 +22,8 @@ public interface ProductMapper {
 
     // 주어진 ID에 해당하는 제품을 수정하는 메서드
     void updateProduct(ProductRequest productRequest);
+
+    // 주어진 ID에 해당하는 제품을 삭제하는 메서드
+    void deleteProduct(Long id);
+
 }

@@ -45,6 +45,11 @@ public class ProductServiceImpl implements ProductService {
         return productDTO;
     }
 
+    // 주어진 ID에 해당하는 Product를 삭제하는 메서드
+    @Override
+    public void deleteProduct(Long id) {
+        productMapper.deleteProduct(id);
+    }
 
 
 }
