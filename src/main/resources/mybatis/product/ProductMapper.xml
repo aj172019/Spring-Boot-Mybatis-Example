@@ -18,5 +18,18 @@
         VALUES (#{name}, #{description}, #{price});
     </insert>
 
+    <!-- 모든 제품을 가져오기 위한 select 쿼리 정의 -->
+    <select id="getAllProducts" resultMap="productResultMap">
+        SELECT * FROM products
+    </select>
+
+    <!-- 주어진 ID에 해당하는 제품을 가져오기 위한 select 쿼리 정의 -->
+    <select id="getProductById" parameterType="Long" resultMap="productResultMap">
+        SELECT *
+        FROM products
+        WHERE id = #{id}
+    </select>
+
+
 
 </mapper>
