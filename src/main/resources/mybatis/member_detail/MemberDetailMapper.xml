@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mybatis.memberDetail.mapper.MemberDetailMapper">
+    <insert id="insertMemberDetail">
+        insert into member_detail (enabled, firstname, job, lastname, password, phone, role, username)
+        values ( 1, #{firstname}, #{job}, #{lastname}, #{password}, #{phone}, #{role}, #{username});
+    </insert>
+    <update id="updateMemberDetail">
+        update member_detail
+        set  phone = #{phone}
+        where id = #{id};
+    </update>
+    <select id="selectMemberDetailByEmail" resultType="long">
+        select id
+        from member_detail
+        where username=#{username};
+    </select>
+</mapper>
