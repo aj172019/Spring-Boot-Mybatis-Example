@@ -36,6 +36,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.mockito:mockito-inline:3.12.4'
     testImplementation 'io.rest-assured:rest-assured:4.4.0'
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 }
 
 tasks.named('test') {

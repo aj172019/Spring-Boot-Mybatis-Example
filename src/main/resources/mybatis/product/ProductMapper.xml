@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatis.restful.mapper.ProductMapper">
+
+    <!-- 제품 결과를 매핑하기 위한 resultMap 정의 -->
+    <resultMap id="productResultMap" type="com.example.mybatis.restful.dto.ProductResponse">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="price" column="price"/>
+    </resultMap>
+
+    <!-- 제품 삽입을 위한 insert 쿼리 정의 -->
+    <insert id="insertProduct" parameterType="com.example.mybatis.restful.dto.ProductResponse">
+        INSERT INTO products (name, description, price)
+        VALUES (#{name}, #{description}, #{price});
+    </insert>
+
+
+</mapper>
