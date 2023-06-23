@@ -42,7 +42,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain newSecurityFilterChain(HttpSecurity http) throws Exception {
         http .authorizeHttpRequests()
-                .antMatchers("/api/**", "/swagger-ui/**").permitAll()
+                .antMatchers("/api/**", "/swagger-ui/**", "/v3/api-docs", "/swagger-resources/**").permitAll()
                 .antMatchers("/admin/**").hasAuthority("Admin")
                 .antMatchers(HttpMethod.GET, "/login", "/join", "/*").permitAll()
                 .antMatchers(HttpMethod.POST,  "/api/vue/**").permitAll()
