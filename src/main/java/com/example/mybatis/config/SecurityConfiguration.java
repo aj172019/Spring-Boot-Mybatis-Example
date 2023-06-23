@@ -73,13 +73,13 @@ public class SecurityConfiguration {
                 .authenticationEntryPoint(new Custom401AuthenticationEntryPoint(HttpStatus.UNAUTHORIZED, responseBody))
                 .accessDeniedHandler(new CustomAccessDeniedHandler());
 
-        //        http.httpBasic().disable().csrf().disable();
+                http.httpBasic().disable().csrf().disable();
 //        http.csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository());
 
-        http    // CSRF Token
+       /* http    // CSRF Token
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
+*/
         return http.build();
     }
 
