@@ -64,11 +64,12 @@ public class ProductController {
     }
 
     // status 200
- /*   @DeleteMapping("/{id}")
+   /*@DeleteMapping("/{id}")
       public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok().build();
     }*/
+
 
 
 }
