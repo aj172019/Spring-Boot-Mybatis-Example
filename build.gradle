@@ -37,6 +37,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:3.12.4'
     testImplementation 'io.rest-assured:rest-assured:4.4.0'
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {

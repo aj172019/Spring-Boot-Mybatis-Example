@@ -7,4 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginResponse {
     private String username;
+
+    public boolean Isvalid(){
+        return !username.isEmpty();
+    }
 }
