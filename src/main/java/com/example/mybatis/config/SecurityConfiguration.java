@@ -29,56 +29,38 @@ public class SecurityConfiguration {
         this.authDetailService = authDetailService;
     }
 
-    ///Orginal
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.httpBasic().disable().csrf().disable();
-
-        return http.authorizeHttpRequests()
-                .anyRequest().permitAll()
-                .and()
-                .build();
-    }
-
     @Bean
-    public SecurityFilterChain newSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        /// for swegger
+        http .authorizeHttpRequests()
+                .antMatchers("/api/products/**", "/swagger-ui/**", "/v3/api-docs", "/swagger-resources/**").permitAll()
+                .and()
+                .csrf().ignoringAntMatchers("/api/products/**");
+
+        /// for front
+        http.csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+
         http .authorizeHttpRequests()
                 .antMatchers("/admin/**").hasAuthority("Admin")
-                .antMatchers(HttpMethod.GET, "/login", "/join", "/*", "/api/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/member_detail/*", "/api/**").permitAll()
-                .antMatchers("/join").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth_detail/login")
-                .defaultSuccessUrl("/")
-                .usernameParameter("username")
-                .failureUrl("/login/error")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/");
-
+                .antMatchers(HttpMethod.GET, "/login", "/join", "/*", "/api/first_token/").permitAll()
+                .antMatchers(HttpMethod.POST,  "/api/vue/**", "/api/**").permitAll()
+                .anyRequest().authenticated();
 
         http.exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())         //인증실패 : 로그인유도
                 .accessDeniedHandler(new CustomAccessDeniedHandler())                   //인가실패 : 로그인은 했으나 권한없음
-        //.accessDeniedPage("/members/login")
         ;
 
-        ///미로그인 시 강제핸들링처리 2022-12-05
-        Map<String, String> responseBody = new HashMap<>();
-        responseBody.put("error", "unauthorized");
-        http.exceptionHandling()
-                .authenticationEntryPoint(new Custom401AuthenticationEntryPoint(HttpStatus.UNAUTHORIZED, responseBody))
-                .accessDeniedHandler(new CustomAccessDeniedHandler());
+        http.httpBasic();
 
-        //        http.httpBasic().disable().csrf().disable();
-//        http.csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository());
-
-        http    // CSRF Token
-                .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
+        ///미로그인 시 강제핸들링처리
+//        Map<String, String> responseBody = new HashMap<>();
+//        responseBody.put("error", "unauthorized");
+//        http.exceptionHandling()
+//                .authenticationEntryPoint(new Custom401AuthenticationEntryPoint(responseBody))
+//                .accessDeniedHandler(new CustomAccessDeniedHandler());
         return http.build();
     }
 

@@ -19,6 +19,7 @@ public class MemberDetailServiceImpl implements MemberDetailService {
     @Override
     public CreateMemberResponse createMember(SaveMemberDetailRequest saveMemberRequest) {
         System.out.println("createMember");
+        System.out.println(saveMemberRequest.toString());
         memberDetailMapper.insertMemberDetail(saveMemberRequest);
         return new CreateMemberResponse();
     }

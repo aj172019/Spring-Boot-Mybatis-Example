@@ -17,6 +17,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         System.out.println("CustomAuthenticationEntryPoint  :::   " + authException);
         request.setAttribute("msg","권한이 없는 사용자 입니다. 로그인 해주세요.");
         request.setAttribute("nextPage","/login");
-        request.getRequestDispatcher("/error/security_error").forward(request, response);
+        request.getRequestDispatcher("/error/400").forward(request, response);
     }
 }

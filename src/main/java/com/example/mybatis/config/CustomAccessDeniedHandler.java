@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//인가 처리 예외(권한 거부)
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     private String errorPage;
 
@@ -15,7 +16,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest req, HttpServletResponse res, AccessDeniedException ade) throws IOException, ServletException {
         System.out.println("CustomAccessDeniedHandler  ::   " + ade);
 
-        errorPage = "/error/403error";
+        errorPage = "/error/403";
         res.sendRedirect(errorPage);
     }
 }

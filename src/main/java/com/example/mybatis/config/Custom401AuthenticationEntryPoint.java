@@ -14,10 +14,9 @@ public class Custom401AuthenticationEntryPoint implements AuthenticationEntryPoi
     private final HttpStatus httpStatus;
     private final Object responseBody;
 
-    public Custom401AuthenticationEntryPoint(HttpStatus httpStatus, Object responseBody) {
-        Assert.notNull(httpStatus, "401 : httpStatus cannot be null");
+    public Custom401AuthenticationEntryPoint(Object responseBody) {
         Assert.notNull(responseBody, "401 : responseBody cannot be null");
-        this.httpStatus = httpStatus;
+        this.httpStatus = HttpStatus.UNAUTHORIZED;
         this.responseBody = responseBody;
     }
 
