@@ -1,9 +1,11 @@
 package com.example.mybatis.config;
 
+import com.example.mybatis.member_detail.service.AuthDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -11,15 +13,23 @@ import org.springframework.security.config.annotation.web.configurers.RequestCac
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity      //Spring security 사용
 public class SecurityConfiguration {
+    private final AuthDetailService authDetailService;
+
+    public SecurityConfiguration(AuthDetailService authDetailService) {
+        this.authDetailService = authDetailService;
+    }
 
     ///Orginal
-//    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic().disable().csrf().disable();
 
@@ -33,13 +43,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain newSecurityFilterChain(HttpSecurity http) throws Exception {
         http .authorizeHttpRequests()
                 .antMatchers("/admin/**").hasAuthority("Admin")
-                .antMatchers(HttpMethod.GET, "/login", "/join", "/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/login", "/join", "/*", "/api/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/member_detail/*", "/api/**").permitAll()
                 .antMatchers("/join").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/auth_detail/login")
                 .defaultSuccessUrl("/")
                 .usernameParameter("username")
                 .failureUrl("/login/error")
@@ -48,7 +58,26 @@ public class SecurityConfiguration {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/");
 
-        http.csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository());
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())         //인증실패 : 로그인유도
+                .accessDeniedHandler(new CustomAccessDeniedHandler())                   //인가실패 : 로그인은 했으나 권한없음
+        //.accessDeniedPage("/members/login")
+        ;
+
+        ///미로그인 시 강제핸들링처리 2022-12-05
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("error", "unauthorized");
+        http.exceptionHandling()
+                .authenticationEntryPoint(new Custom401AuthenticationEntryPoint(HttpStatus.UNAUTHORIZED, responseBody))
+                .accessDeniedHandler(new CustomAccessDeniedHandler());
+
+        //        http.httpBasic().disable().csrf().disable();
+//        http.csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository());
+
+        http    // CSRF Token
+                .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
         return http.build();
     }

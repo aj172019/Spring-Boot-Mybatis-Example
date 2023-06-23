@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mybatis.memberDetail.mapper.MemberDetailMapper">
+<mapper namespace="com.example.mybatis.member_detail.mapper.MemberDetailMapper">
     <insert id="insertMemberDetail">
         insert into member_detail (enabled, firstname, job, lastname, password, phone, role, username)
         values ( 1, #{firstname}, #{job}, #{lastname}, #{password}, #{phone}, #{role}, #{username});

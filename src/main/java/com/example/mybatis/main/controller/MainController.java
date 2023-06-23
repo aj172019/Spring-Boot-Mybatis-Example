@@ -1,5 +1,7 @@
 package com.example.mybatis.main.controller;
 
+import com.example.mybatis.member.dto.LoginResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +31,13 @@ public class MainController {
         System.out.println("hello join!");
 
         return "pages/join";
+    }
+
+    ///회원가입 페이지
+    @RequestMapping("/api/first_token")
+    public ResponseEntity apiSync() {
+        System.out.println("hello api sync!");
+
+        return ResponseEntity.ok(null);
     }
 }
