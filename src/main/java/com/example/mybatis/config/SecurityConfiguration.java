@@ -39,10 +39,21 @@ public class SecurityConfiguration {
                 .build();
     }
 
+    ///for swagger
     @Bean
-    public SecurityFilterChain newSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain verifySecurityFilterChain(HttpSecurity http) throws Exception {
         http .authorizeHttpRequests()
                 .antMatchers("/api/**", "/swagger-ui/**", "/v3/api-docs", "/swagger-resources/**").permitAll()
+                 .and()
+                .httpBasic().disable().csrf().disable();
+
+        return http.build();
+    }
+
+    //for front-end separate
+    @Bean
+    public SecurityFilterChain frontSecurityFilterChain(HttpSecurity http) throws Exception {
+        http .authorizeHttpRequests()
                 .antMatchers("/admin/**").hasAuthority("Admin")
                 .antMatchers(HttpMethod.GET, "/login", "/join", "/*").permitAll()
                 .antMatchers(HttpMethod.POST,  "/api/vue/**").permitAll()
@@ -73,13 +84,10 @@ public class SecurityConfiguration {
                 .authenticationEntryPoint(new Custom401AuthenticationEntryPoint(HttpStatus.UNAUTHORIZED, responseBody))
                 .accessDeniedHandler(new CustomAccessDeniedHandler());
 
-                http.httpBasic().disable().csrf().disable();
-//        http.csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository());
-
-       /* http    // CSRF Token
+        http    // CSRF Token
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-*/
+
         return http.build();
     }
 
