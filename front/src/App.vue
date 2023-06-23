@@ -4,19 +4,13 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
+  <!-- <header>
 
-    <div class="wrapper">
-      <!-- <HelloWorld msg="You did it!" />
+  </header> -->
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav> -->
+  <div class="wrapper  align-items-center">
+    <RouterView />
     </div>
-  </header>
-
-  <RouterView />
 </template>
 
 <style scoped>

@@ -33,8 +33,8 @@ const router = createRouter({
 
     {
       path: '/join',
-      name: "MemberForm",
-      component: () => import('@/views/MemberForm.vue'),
+      name: "JoinForm",
+      component: () => import('@/views/JoinForm.vue'),
     }
   ]
 })

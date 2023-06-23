@@ -39,7 +39,7 @@
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             </form>
             <div class="actions">
-                <a href="/members/new">회원가입</a>
+                <a href="/join">회원가입</a>
                 <!-- <a href="javascript:void(0)">아이디 찾기</a> <a href="javascript:void(0)">비밀번호
                             찾기</a>-->
             </div>

@@ -1,6 +1,5 @@
 package com.example.mybatis.main.controller;
 
-import com.example.mybatis.member.dto.LoginResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
