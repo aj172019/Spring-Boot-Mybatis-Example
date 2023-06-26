@@ -11,4 +11,5 @@ public @interface SearchCondition {
     String[] fromDateFields() default {};
     String[] toDateFields() default {};
 
+
 }
