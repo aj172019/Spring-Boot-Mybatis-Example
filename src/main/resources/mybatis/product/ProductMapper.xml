@@ -28,7 +28,7 @@
     </select>
 
     <!-- 주어진 ID에 해당하는 제품을 가져오기 위한 select 쿼리 -->
-    <!-- Long 타입의 id 매개변수를 받아서 해당 id에 대한 제품을 조회하고, productResultMap을 사용하여 결과를 매핑 -->
+    <!-- 해당 id에 대한 제품을 조회하고, productResultMap을 사용하여 결과를 매핑 -->
     <select id="getProductById" parameterType="Long" resultMap="productResultMap">
         SELECT *
         FROM products
@@ -46,7 +46,7 @@
     </update>
 
     <!-- 제품을 삭제하기 위한 delete 쿼리 -->
-    <!-- Long 타입의 id 매개변수를 받아서 해당 id에 대한 제품을 삭제 -->
+    <!-- 해당 id에 대한 제품을 삭제 -->
     <delete id="deleteProduct" parameterType="Long">
         DELETE
         FROM products
