@@ -4,8 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mybatis.restful.mapper.ProductMapper">
 
+    <!--Product Entity와 데이터베이스 table간의 Mapping을 정의하고 CRUD작업을 위한 SQL쿼리를 포함한다.-->
+
     <!-- 제품 결과를 매핑하기 위한 resultMap -->
-    <!-- 제품의 id, name, description, price를 매핑 -->
+    <!-- 제품의 id, name, description, price를 매핑하여 ProductResponse에 저장 -->
     <resultMap id="productResultMap" type="com.example.mybatis.restful.dto.ProductResponse">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
@@ -14,14 +16,14 @@
     </resultMap>
 
     <!-- 제품 삽입을 위한 insert 쿼리 -->
-    <!-- ProductResponse를 매개변수로 받아서 products 테이블에 데이터 삽입 -->
+    <!-- ProductResponse를 파라미터로 받아서 products 테이블에 데이터 추가 -->
     <insert id="insertProduct" parameterType="com.example.mybatis.restful.dto.ProductResponse">
         INSERT INTO products (name, description, price)
         VALUES (#{name}, #{description}, #{price});
     </insert>
 
     <!-- 모든 제품을 가져오기 위한 select 쿼리 -->
-    <!-- productResultMap을 사용하여 결과를 매핑 -->
+    <!-- productResultMap을 사용하여 결과를 매핑하고 Products 테이블에서 모든 데이터를 조회하여 결과를 매핑 -->
     <select id="getAllProducts" resultMap="productResultMap">
         SELECT *
         FROM products
