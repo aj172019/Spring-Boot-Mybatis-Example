@@ -10,7 +10,7 @@ public interface ProductService {
     // 상품을 추가하는 메서드
     ProductResponse createProduct(ProductResponse productResponse);
 
-    // 살품의 리스트를 조회하는 메서드
+    // 상품의 리스트를 조회하는 메서드
     List<ProductResponse> getAllProducts();
 
     // ID를 기반으로 상품을 조회하는 메서드
@@ -21,6 +21,5 @@ public interface ProductService {
 
     // ID를 기반으로 상품을 삭제하는 메서드
     void deleteProduct(Long id);
-
 
 }

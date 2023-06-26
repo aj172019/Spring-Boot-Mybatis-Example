@@ -38,7 +38,7 @@
     </select>
 
     <!-- 제품을 업데이트하기 위한 update 쿼리 -->
-    <!-- ProductRequest를 매개변수로 받아서 해당 id의 제품을 업데이트 -->
+    <!-- ProductRequest를 파라미터로 받아서 해당 id의 제품을 업데이트 -->
     <update id="updateProduct" parameterType="com.example.mybatis.restful.dto.ProductRequest">
         UPDATE products
         SET name        = #{name},

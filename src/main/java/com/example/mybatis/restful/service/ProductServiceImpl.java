@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // Product 추가하는 메서드
-    // 파라미터로 받은 ProductResponse 객체를 ProductMapper를 사용하여 데이터베이스와 상호작용을 수행
+    // 파라미터로 받은 ProductResponse 객체를 ProductMapper를 사용하여 데이터베이스에 상품을 추가
     @Override
     public ProductResponse createProduct(ProductResponse productResponse) {
         productMapper.insertProduct(productResponse);
@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // 주어진 ID에 해당하는 Product를 삭제하는 메서드
-    // 삭제하고 ProductMapper를 사용하여 주어진 ID에 해당하는 상품을 삭제
+    // ProductMapper를 사용하여 주어진 ID에 해당하는 상품을 삭제
     @Override
     public void deleteProduct(Long id) {
         productMapper.deleteProduct(id);
