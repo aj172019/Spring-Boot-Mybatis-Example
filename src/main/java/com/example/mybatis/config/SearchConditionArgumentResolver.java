@@ -1,7 +1,7 @@
 package com.example.mybatis.config;
 
-import com.example.mybatis.config.annotation.SearchCondition;
-import com.example.mybatis.constant.ResolverRule;
+import com.example.mybatis.annotation.SearchCondition;
+import com.example.mybatis.constant.SearchConditionRule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +33,9 @@ public class SearchConditionArgumentResolver implements HandlerMethodArgumentRes
         SearchCondition searchCondition = Objects.requireNonNull(parameter.getParameterAnnotation(SearchCondition.class));
         ParameterMapModifier parameterMapModifier = new ParameterMapModifier(request);
         Arrays.stream(searchCondition.fromDateFields())
-                .forEach(field -> parameterMapModifier.modify(field, ResolverRule.FROM_DATE_STRING_TO_LOCAL_DATE_TIME));
+                .forEach(field -> parameterMapModifier.modify(field, SearchConditionRule.FROM_DATE_STRING_TO_LOCAL_DATE_TIME));
         Arrays.stream(searchCondition.toDateFields())
-                .forEach(field -> parameterMapModifier.modify(field, ResolverRule.TO_DATE_STRING_TO_LOCAL_DATE_TIME));
+                .forEach(field -> parameterMapModifier.modify(field, SearchConditionRule.TO_DATE_STRING_TO_LOCAL_DATE_TIME));
         return parameterMapModifier.map(parameter.getParameterType());
     }
 }

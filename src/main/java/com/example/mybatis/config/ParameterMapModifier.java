@@ -1,6 +1,6 @@
 package com.example.mybatis.config;
 
-import com.example.mybatis.constant.ResolverRule;
+import com.example.mybatis.constant.SearchConditionRule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -30,7 +30,7 @@ public class ParameterMapModifier {
     }
 
     //modify parameterMap value by ResovlerRule, string field
-    public void modify(String field, ResolverRule rule) {
+    public void modify(String field, SearchConditionRule rule) {
         modify(field, rule.formula());
     }
     //modify parameterMap value by function, string field

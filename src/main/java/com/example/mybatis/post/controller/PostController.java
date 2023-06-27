@@ -1,7 +1,7 @@
 package com.example.mybatis.post.controller;
 
 
-import com.example.mybatis.config.annotation.SearchCondition;
+import com.example.mybatis.annotation.SearchCondition;
 import com.example.mybatis.post.dto.PostSearchCondition;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

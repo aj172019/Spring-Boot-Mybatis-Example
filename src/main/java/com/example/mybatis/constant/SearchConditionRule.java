@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 
-public enum ResolverRule {
+public enum SearchConditionRule {
     DATE_STRING_TO_LOCAL_DATE(field -> LocalDate.parse(field, DateTimeFormatter.ofPattern(DateTimeFormat.DATE.format))),
     DATE_TIME_STRING_TO_LOCAL_DATE_TIME(field -> LocalDateTime.parse(field, DateTimeFormatter.ofPattern(DateTimeFormat.DATE_TIME.format))),
     FROM_DATE_STRING_TO_LOCAL_DATE_TIME(field -> LocalDateTime.parse(field + " 00:00:00", DateTimeFormatter.ofPattern(DateTimeFormat.DATE_TIME.format))),
@@ -14,7 +14,7 @@ public enum ResolverRule {
     private final Function<String, Object> formula;
 
 
-    ResolverRule(Function<String, Object> formula) {
+    SearchConditionRule(Function<String, Object> formula) {
         this.formula = formula;
     }
 
