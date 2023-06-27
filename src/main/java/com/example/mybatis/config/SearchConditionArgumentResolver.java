@@ -1,6 +1,7 @@
 package com.example.mybatis.config;
 
 import com.example.mybatis.config.annotation.SearchCondition;
+import com.example.mybatis.constant.ResolverRule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Slf4j
@@ -26,12 +28,14 @@ public class SearchConditionArgumentResolver implements HandlerMethodArgumentRes
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         SearchCondition searchCondition = Objects.requireNonNull(parameter.getParameterAnnotation(SearchCondition.class));
-        return new Parameters(request)
-                .modify(searchCondition.fromDateFields(), field -> field + " 00:00:00")
-                .modify(searchCondition.toDateFields(), field -> field + " 23:59:59")
-                .map(parameter.getParameterType());
+        ParameterMapModifier parameterMapModifier = new ParameterMapModifier(request);
+        Arrays.stream(searchCondition.fromDateFields())
+                .forEach(field -> parameterMapModifier.modify(field, ResolverRule.FROM_DATE_STRING_TO_LOCAL_DATE_TIME));
+        Arrays.stream(searchCondition.toDateFields())
+                .forEach(field -> parameterMapModifier.modify(field, ResolverRule.TO_DATE_STRING_TO_LOCAL_DATE_TIME));
+        return parameterMapModifier.map(parameter.getParameterType());
     }
 }

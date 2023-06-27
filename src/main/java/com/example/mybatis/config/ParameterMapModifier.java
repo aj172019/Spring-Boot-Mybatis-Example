@@ -1,17 +1,21 @@
 package com.example.mybatis.config;
 
+import com.example.mybatis.constant.ResolverRule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Parameters {
+public class ParameterMapModifier {
     private final Map<String, Object> parameterMap;
 
-    protected Parameters(HttpServletRequest request) {
+    public ParameterMapModifier(HttpServletRequest request) {
         this.parameterMap = new HashMap<>(request.getParameterMap()).entrySet().stream().map(e -> {
             Object value;
             if (e.getValue().length == 1) {
@@ -25,14 +29,16 @@ public class Parameters {
         }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    // modify parameterMap value by function
-    public Parameters modify(String[] fields, Function<String, Object> function) {
-        Arrays.stream(fields).forEach(field -> {
-            if (parameterMap.containsKey(field)) {
-                parameterMap.put(field, function.apply((String) parameterMap.get(field)));
-            }
-        });
-        return this;
+    //modify parameterMap value by ResovlerRule, string field
+    public void modify(String field, ResolverRule rule) {
+        modify(field, rule.formula());
+    }
+    //modify parameterMap value by function, string field
+    public void modify(String field, Function<String, Object> function) {
+        if (!parameterMap.containsKey(field)) {
+            throw new IllegalArgumentException("field not found: " + field);
+        }
+        parameterMap.put(field, function.apply((String) parameterMap.get(field)));
     }
 
     //retun object by parameter class type
